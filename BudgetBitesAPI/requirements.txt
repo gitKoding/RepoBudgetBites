@@ -1,0 +1,88 @@
+# ============================================================================
+# BudgetBites API - Production Requirements
+# ============================================================================
+#
+# BUILD INSTRUCTIONS
+# ------------------
+# 1. Clone the repository
+# 2. Create a virtual environment:
+#    python -m venv .venv
+#
+# 3. Activate the virtual environment:
+#    Windows:  .venv\Scripts\activate
+#    Linux/Mac: source .venv/bin/activate
+#
+# 4. Install dependencies:
+#    pip install --upgrade pip
+#    pip install -r requirements.txt
+#
+# 5. Configure environment variables:
+#    - GEMINI_API_KEY: Your Google Gemini API key (required)
+#    - GOOGLE_MAPS_API_KEY: Your Google Maps/Places API key (required)
+#    - LOG_LEVEL: Optional, defaults to INFO (DEBUG, INFO, WARNING, ERROR)
+#    - PORT: Optional, defaults to 8080
+#    - HOST: Optional, defaults to 0.0.0.0
+#
+# 6. Test the installation:
+#    python -m pytest tests/
+#
+# DEPLOYMENT INSTRUCTIONS
+# ------------------------
+# Local Development:
+#   uvicorn src.server.app:app --reload --host 0.0.0.0 --port 8080
+#
+# Production (Uvicorn):
+#   uvicorn src.server.app:app --host 0.0.0.0 --port 8080 --workers 4
+#
+# Production (Gunicorn + Uvicorn):
+#   gunicorn src.server.app:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080
+#
+# Docker Deployment:
+#   1. Build: docker build -t budgetbites-api .
+#   2. Run: docker run -p 8080:8080 \
+#           -e GEMINI_API_KEY=your_key \
+#           -e GOOGLE_MAPS_API_KEY=your_key \
+#           budgetbites-api
+#
+# Cloud Deployment (Google Cloud Run, AWS Lambda, Azure Functions):
+#   - Ensure environment variables are configured in cloud platform
+#   - Set entrypoint: uvicorn src.server.app:app --host 0.0.0.0 --port $PORT
+#   - Health check endpoint: /health
+#
+# HEALTH CHECK
+# ------------
+# Endpoint: GET /health
+# Returns: {"status": "healthy", "service": "UFA - Budget Bites API", ...}
+#
+# ============================================================================
+# DEPENDENCIES
+# ============================================================================
+
+# Web Framework
+fastapi==0.114.2
+
+# ASGI Server
+uvicorn[standard]==0.30.3
+
+# HTTP Client
+httpx==0.27.2
+
+# Data Validation
+pydantic==1.10.18
+
+# Configuration
+PyYAML==6.0.2
+
+# AI Service - Google Gemini
+google-genai==1.46.0
+
+# ============================================================================
+# PRODUCTION RECOMMENDATIONS
+# ============================================================================
+# - Use gunicorn with uvicorn workers for better process management
+# - Set up monitoring and logging aggregation
+# - Configure auto-scaling based on CPU/memory usage
+# - Implement rate limiting for API endpoints
+# - Use a reverse proxy (nginx, Traefik) for SSL termination
+# - Enable CORS settings in config/default.yaml based on your frontend domain
+# ============================================================================
