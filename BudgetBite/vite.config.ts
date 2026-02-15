@@ -19,6 +19,11 @@ export default defineConfig({
   preview: {
     host: '0.0.0.0', // Bind to all interfaces for cloud platforms
     port: Number(process.env.PORT) || 10000, // Use Render's PORT or default
+    strictPort: true, // Exit if port is unavailable
+    allowedHosts: [
+      'ufa-budget-bites.onrender.com',
+      '.onrender.com', // Allow all Render subdomains
+    ],
   },
   // Build optimizations for production
   build: {
