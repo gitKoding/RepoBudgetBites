@@ -24,6 +24,7 @@ export default defineConfig({
       'ufa-budget-bites.onrender.com',
       '.onrender.com', // Allow all Render subdomains
     ],
+    proxy: undefined, // Disable proxy in production preview
   },
   // Build optimizations for production
   build: {
