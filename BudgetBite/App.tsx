@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { useState } from 'react';
 import { Search, ChevronRight, MapPin, ShoppingBag, Minus, Plus, Loader2, ChevronLeft, AlertCircle, ExternalLink, X } from 'lucide-react';
 import { Button } from './components/ui/button';
@@ -6,6 +7,9 @@ import { ImageWithFallback } from './components/figma/ImageWithFallback';
 // Removed tab-specific detail components
 import { Slider } from './components/ui/slider';
 // Removed unused Select import
+
+// API Base URL from environment variable
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string) || '';
 
 // Removed Tab type; simplifying UI to single view
 
@@ -228,8 +232,7 @@ export default function App() {
     };
 
     try {
-      const API_BASE = (import.meta as any)?.env?.VITE_API_BASE_URL || '';
-      const url = `${API_BASE}/api/v1/search`;
+      const url = `${API_BASE_URL}/api/v1/search`;
       const resp = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
